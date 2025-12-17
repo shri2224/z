@@ -1,0 +1,64 @@
+ps -ef | awk 'BEGIN{print "c1\tc2\tc3"} {print $1"\t"$2"\t"$3} END{print "DoNe"}'
+ps -ef | awk 'BEGIN{print "c1,c2,c3"} {print $1","$2","$3} END{print "DoNe"}' > test.csv - for separate columns
+
+
+
+ps -ef | awk -F: '{print $1}' - field separator prints upto :
+ps -ef | awk -F/ '{print $1}' - field separator prints upto /
+
+
+awk -v var1=xyz 'BEGIN{printf "var1 = %s\n", var1}' - assigning a variable
+
+
+ ps -ef | awk '/init/ {print}' - prints the line which has init and /regex/ is regex
+
+
+
+
+ ps -ef | awk '/init/ {print ; ++c} END {print "total:",c}'
+root           1       0  0 Dec15 ?        00:00:04 /sbin/init
+root           2       1  0 Dec15 ?        00:00:00 /init
+root         823       2  0 02:01 ?        00:00:00 /init
+root         824     823  0 02:01 ?        00:00:00 /init
+shp         1004     828  0 02:46 pts/2    00:00:00 awk /init/ {print ; ++c} END {print "total:",c}
+total: 5
+
+
+
+ps -ef | awk '/shp/ {++c} END {print "total:",c}' and ps -ef | grep shp | wc -l are same 
+
+
+
+
+ awk 'BEGIN{x="abc"; if(x=="abc") printf "over\n" ; else "no";}'
+
+
+ awk 'BEGIN{x="abc"; if(x=="abcd") printf "over\n" ; else print "no"}'
+output no
+
+awk 'BEGIN{a=1;b=2;c=a+b; printf "%d + %d=%d",a,b,c}'
+
+
+
+ awk '{bytes[$2] +=$7} END{(for i in bytes)print bytes[i],i }' log*.log - cal the bytes and prints the IP
+
+
+ awk '{country[$10]+=$10} END{for(i in country)print country[i],i}' dst.log
+
+
+
+
+
+awk '{bytes[$2]+=$7} END{for(i in bytes)print bytes[i],i}' dst.log 
+
+ awk '{bytes[$2] +=$7; country[$2] = $10} END{for(i in bytes) print bytes[
+i],i, country[i]}' dst.log
+
+
+
+
+🧠 INTERVIEW GOLD STATEMENT
+
+Say this confidently 👇
+
+“Whether it’s authentication failure, malware, or abnormal traffic, the analysis workflow is identical: filter → group → count → correlate → conclude.”

@@ -1,0 +1,67 @@
+EG logs win:
+
+Date: 2025-12-14 10:15:32
+EventID: 4625
+Source: Microsoft-Windows-Security-Auditing
+TaskCategory: Logon
+Level: Information
+Keywords: Audit Failure
+User: N/A
+Computer: WIN-12345
+Description:
+An account failed to log on.
+
+Subject:
+    Security ID:        S-1-0-0
+    Account Name:       -
+    Account Domain:     -
+    Logon ID:           0x0
+
+Logon Type:            3
+
+Account For Which Logon Failed:
+    Security ID:        S-1-0-0
+    Account Name:       testuser
+    Account Domain:     WIN-12345
+
+Failure Information:
+    Failure Reason:     Unknown user name or bad password.
+    Status:             0xC000006D
+    Sub Status:         0xC0000064
+
+Process Information:
+    Caller Process ID:  0x0
+    Caller Process Name:    -
+
+Network Information:
+    Workstation Name:   DESKTOP01
+    Source Network Address: 192.168.1.100
+    Source Port:        51423
+
+Detailed Authentication Information:
+    Logon Process:      NtLmSsp 
+    Authentication Package: NTLM
+    Transited Services: -
+    Package Name (NTLM only):    -
+    Key Length:         0
+
+
+Regex:::::
+
+
+
+
+EventID:\s+(\d+)
+Date:\s+(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})
+Workstation Name:(\s+)(\S+)
+
+
+
+Linux 
+Dec 14 10:15:32 ubuntu-server sshd[12345]: Failed password for invalid user testuser from 192.168.1.100 port 51423 ssh2
+
+regex 
+^(\w+ \d{1,2} \d{1,2}\:\d{1,2}\:\d{1,2})
+sshd\[(\d+)\]
+from (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})
+port (\d+)
