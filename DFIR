@@ -1,0 +1,27 @@
+1. Inode (Index Node)
+An inode is a data structure in Unix-style file systems (like Ext4) that acts as the "identity" of a file. 
+What it stores: It contains all metadata about a file except its name and actual content. This includes file size, permissions, owner/group IDs, timestamps (access, modification, and change), and pointers to the disk blocks where the data is stored.
+Forensic significance: When a file is deleted, the file name is often removed from the directory, but the inode and its metadata may remain until overwritten, allowing investigators to find where the data blocks are located on the disk. 
+
+
+2. dd (Data Dump)
+dd is a command-line utility used to convert and copy files at a low level. 
+Use in Forensics: It is primarily used to create a "bit-by-bit" or "bitstream" image of a physical drive or partition. Unlike a standard file copy, dd captures everything, including hidden data and unallocated space where deleted files might reside. 
+
+3.3. dc3dd
+dc3dd is a specialized version of dd developed by the Department of Defense Cyber Crime Center (DC3) specifically for digital forensics. 
+Key Features: It adds forensic-grade features that standard dd lacks, such as on-the-fly hashing (MD5, SHA-256) for data integrity, a progress meter, and the ability to split output into multiple smaller files. 
+
+4. Scalpel
+Scalpel is an open-source "file carving" tool. 
+How it works: It is used when the file system is so damaged that metadata (inodes) are lost. It scans the raw data blocks for specific "headers" and "footers" (e.g., the specific bytes that start and end a JPEG or PDF) to reassemble files based on their internal structure.
+Efficiency: It is a faster, more efficient rewrite of an older tool called Foremost. 
+
+
+5. jls and jcat (The Sleuth Kit)
+These are utilities from The Sleuth Kit (TSK) used specifically to interact with the file system journal. 
+jls (Journal List): Lists all the entries currently stored in the file system journal (typically Ext3 or Ext4). This helps an examiner see a history of recent changes.
+jcat (Journal Cat): Extracts and displays the contents of a specific entry from the journal. By using jcat, an investigator can sometimes see the metadata of a recently deleted file that still exists in the journal log, providing the exact disk addresses needed to recover the data. 
+
+
+
